@@ -33,8 +33,7 @@ git clone https://github.com/rahul2863/ecommerce_project.git
 pip install -r requirements.txt
 ```
 #### 3. Database Setup
-- Create a MySQL database and update the connection details in the config.py file.
-- Run the SQL scripts provided in the database folder to set up the required tables.
+- Run the SQL scripts provided in the ecommerce_sql.sql file to set up the required tables.
 #### 4. Run the Application:
 ```bash
 python app.py
