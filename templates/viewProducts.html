@@ -1,0 +1,67 @@
+{%extends 'homePage.html'%}
+
+{%block content%}
+<div class="container" style="margin-top: 6rem;">
+    <!-- Back to Dashboard Button at the Top -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="/admin-page">
+            <button type="button" class="btn btn-primary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </button>
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white text-center">
+            <h2>Manage Products</h2>
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Media</th>
+                            <th>Name</th>
+                            <th>Date Added</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>In Stock</th>
+                            <th>Edit Product</th>
+                            <th>Delete Product</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {%for product in products%}
+                        <tr>
+                            <td class="text-center">
+                                <img src="{{ product[1] }}" alt="{{ product[1] }}" style="width: 50px; height: auto;"/>
+                                <!-- Replace image_index with the actual index of the image URL in your product list -->
+                            </td>
+                            
+                            {%for data in product[2:]%}  <!-- Skip product[0] if it's the ID -->
+                                <td>{{data}}</td>
+                            {%endfor%}
+                            <td class="text-center">
+                                <a href="/editProduct?pid={{product[0]}}">
+                                    <button type="button" class="btn btn-success btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/deleteProduct?pid={{product[0]}}" onclick="return confirm('Are you sure you want to delete this product?')">
+                                    <button type="button" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

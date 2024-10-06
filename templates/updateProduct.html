@@ -1,0 +1,59 @@
+{%extends 'homePage.html'%}
+{%block content%}
+<div class="container" style="margin-top: 6rem;">
+    <center>
+        <h1 class="mb-4">Update Product</h1>
+        <hr class="mb-4">
+        <form method="post">
+            <div class="mb-3 row">
+                <label for="sname" class="col-sm-2 col-form-label">Product Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter Product Name" value="{{product[1]}}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="percent" class="col-sm-2 col-form-label">Description:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="description" name="description" placeholder="Enter Product Description" value="{{product[2]}}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="dob" class="col-sm-2 col-form-label">Price:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter Product Price" value="{{product[3]}}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="course" class="col-sm-2 col-form-label">Stock quantity:</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter Stock Quantity" value="{{product[4]}}">
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="course" class="col-sm-2 col-form-label">Category:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="category" name="category" placeholder="(Watch,Shoes,Clothes)" value="{{product[5]}}" >
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="course" class="col-sm-2 col-form-label">Product Media:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="media" name="media" placeholder="Enter Image URL" value="{{product[6]}}">
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <input type="hidden" name="pid" value="{{product[0]}}">
+                <input type="submit" class="btn btn-primary" value="Update Product">
+            </div>
+        </form>
+    </center>
+</div>
+
+
+{%endblock%}

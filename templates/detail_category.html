@@ -1,0 +1,106 @@
+{%extends 'homePage.html'%}
+
+{%block content%}
+<!-- Category Navigation Section -->
+<div class="container" style="margin-top: 5rem;">
+  <div class="row justify-content-center">
+    <div class="col-md-10 text-center">
+      <h2>Product Details</h2>
+      <div class="d-flex justify-content-around mt-4 category-links">
+        <div class="category-item">
+          <a href="/detail_category?id=2" class="category-link text-decoration-none">
+            <button class="btn btn-primary category-btn">Shoes</button>
+          </a>
+        </div>
+        <div class="category-item">
+          <a href="/detail_category?id=3" class="category-link text-decoration-none">
+            <button class="btn btn-success category-btn">Clothes</button>
+          </a>
+        </div>
+        <div class="category-item">
+          <a href="/detail_category?id=1" class="category-link text-decoration-none">
+            <button class="btn btn-warning category-btn">Watches</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Details Section --> 
+<div class="container mt-5">
+
+  <div class="row row-2 mt-5">
+
+    {%for product in products%}
+    <!-- Cards -->
+    <div class="col-md-4">
+      <div class="card mt-4 detail-category">
+        <div class="image-container position-relative">
+          <!-- Image with dark overlay effect on hover -->
+          <img src={{product[6]}} class="card-img-top product-image" alt="Product Image">
+          
+          <!-- Hover icons -->
+          <div class="hover-icons position-absolute top-50 start-50 translate-middle">
+            <a href="/add_to_cart?pid={{product[0]}}&page=home" class="btn btn-primary me-2 add-to-cart-btn"> 
+              <i class="bi bi-cart"></i>
+            </a>
+            <a href="/add_to_fav?pid={{product[0]}}" class="btn btn-danger fav-btn"> 
+              <i class="bi bi-heart"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{product[1]}}</h5>
+          <p class="card-text">{{product[2]}}</p>
+          <div class="d-flex align-items-center">
+            <span class="text-warning">
+              &#9733; &#9733; &#9733; &#9733; &#9734;
+            </span>
+            <span class="ms-2">4.0</span>
+          </div>
+          <p class="card-price mt-2">${{product[3]}}</p>
+          
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <a href="/productDetails?pid={{product[0]}}" class="btn btn-info d-flex">
+              <i class="bi bi-info-circle me-2"></i> View Details
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+
+<!-- Add some hover animations and styles -->
+<style>
+  .category-link:hover .icon-container {
+    transform: scale(1.2);
+    transition: transform 0.3s ease-in-out;
+  }
+  .hover-icons {
+    display: none;
+  }
+  .image-container:hover .hover-icons {
+    display: flex;
+    transition: all 0.3s ease;
+  }
+  .product-image {
+    transition: opacity 0.3s ease;
+  }
+  .image-container:hover .product-image {
+    opacity: 0.7;
+  }
+  .category-item {
+    text-align: center;
+  }
+  .category-links .category-item .icon-container {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+  }
+</style>
+{%endblock%}

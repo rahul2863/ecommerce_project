@@ -1,0 +1,89 @@
+{% extends 'homePage.html' %}
+{% block content %}
+<div class="container" style="margin-top: 6rem;">
+    <center>
+        <h1 class="mb-4">Update Profile</h1>
+        <hr class="mb-4">
+        <form method="post">
+            <div class="mb-3 row">
+                <label for="username" class="col-sm-2 col-form-label">Username:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" name="username" value="{{user[3]}}" placeholder="Enter Username" required>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="email" class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email" value="{{user[1]}}" placeholder="Enter Email" required>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="phone" class="col-sm-2 col-form-label">Phone Number:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="phone" name="phone" value="{{user[4]}}" placeholder="Enter Phone Number" required>
+                </div>
+            </div>
+
+            <!-- Password section -->
+            <div class="mb-3 row">
+                <label for="current_password" class="col-sm-2 col-form-label">Current Password:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="current_password" name="current_password" placeholder="Enter Current Password" required>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="new_password" class="col-sm-2 col-form-label">New Password:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="new_password" name="new_password" placeholder="Enter New Password" required>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for="confirm_password" class="col-sm-2 col-form-label">Confirm New Password:</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm New Password" required>
+                </div>
+            </div>
+
+            <div class="mt-4 text-center">
+                <input type="submit" class="btn btn-primary" id='updateBtn' value="Update Profile">
+            </div>
+        </form>
+    </center>
+</div>
+
+<script>
+    // Assuming user[2] contains the hashed password
+    let currentPassHash = '{{user[2]}}'; // The hash of the current password
+    let currentPasswordField = document.getElementById('current_password');
+    let newPassField = document.getElementById('new_password');
+    let confirmPassField = document.getElementById('confirm_password');
+
+    document.getElementById('updateBtn').addEventListener('click', function(event) {
+        let currentPass = currentPasswordField.value;
+        let newPass = newPassField.value;
+        let confirmPass = confirmPassField.value;
+
+        // Check if the current password is correct
+        // You should send a request to the server to verify the password hash
+        if (currentPass !== currentPassHash) {
+            alert('Incorrect Current Password');
+            event.preventDefault(); // Prevent form submission
+            return; // Exit the function
+        }
+
+        // Check if new passwords match
+        if (newPass !== confirmPass) {
+            alert('New Password does not match the Confirm Password');
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+
+    if('{{message}}'){
+        alert('{{message}}');
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'homePage.html' %}
+
+{% block content %}
+<div class="container update-order-status-container">
+    <div class="card update-order-status-card mt-5">
+        <h2 class="text-center update-order-status-header">
+            <i class="fas fa-edit status-icon"></i> Update Order Status
+        </h2>
+        
+        <form action="/updateOrderStatus" method="POST">
+            <!-- Hidden field for Order ID -->
+            <input type="hidden" name="order_id" value="{{ order_id }}">
+
+            <!-- Order Status Dropdown -->
+            <div class="mb-3">
+                <label for="orderStatus" class="form-label">Order Status</label>
+                <select class="form-select" id="orderStatus" name="status" required>
+                    <option value="pending" {% if status == 'pending' %}selected{% endif %}>Pending</option>
+                    <option value="shipped" {% if status == 'shipped' %}selected{% endif %}>Shipped</option>
+                    <option value="delivered" {% if status == 'delivered' %}selected{% endif %}>Delivered</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Update Status</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

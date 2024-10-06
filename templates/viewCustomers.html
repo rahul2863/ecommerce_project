@@ -1,0 +1,44 @@
+{%extends 'homePage.html'%}
+
+{%block content%}
+<div class="container" style="margin-top: 8rem;">
+    <!-- Back to Dashboard Button at the Top -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="/admin-page">
+            <button type="button" class="btn btn-primary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </button>
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white text-center">
+            <h2>Manage Customers</h2>
+        </div>
+        <div class="card-body bg-light">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Joining_date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {%for customer in customers%}
+                        <tr>
+                            {%for data in customer[1:]%}  <!-- Skip product[0] if it's the ID -->
+                                <td>{{data}}</td>
+                            {%endfor%}
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

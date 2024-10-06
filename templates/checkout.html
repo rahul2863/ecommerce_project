@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f1f3f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        .card {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .checkout-summary {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-summary p {
+            font-size: 1.1rem;
+        }
+
+        .checkout-summary strong {
+            font-size: 1.2rem;
+        }
+
+        .checkout-items {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .checkout-items h5 {
+            font-weight: bold;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            animation: fadeInAnimation 0.5s ease-in-out forwards;
+        }
+
+        .checkout-item:last-child {
+            border-bottom: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .payment-dropdown {
+            position: relative;
+        }
+
+        .payment-dropdown .form-select {
+            padding-left: 40px; /* Create space for icon */
+        }
+
+        .payment-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* Prevent interaction with the icon */
+            color: #6c757d; /* Optional: Make the icon color match Bootstrap's form-control text color */
+        }
+
+        /* Simple fade-in animation */
+        .fade-in {
+            opacity: 0;
+            animation: fadeInAnimation ease 1.5s forwards;
+        }
+
+        @keyframes fadeInAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover effect on items */
+        .checkout-item:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container checkout-container">
+    <div class="checkout-card p-4 fade-in">
+        <h2 class="text-center"><i class="fas fa-credit-card icon"></i>Checkout</h2>
+
+        <!-- List of items being checked out -->
+        <div class="checkout-items fade-in">
+            <h5><i class="fas fa-box-open icon"></i>Items in Your Cart</h5>
+            {% for item in cart_items %}
+            <a href="/viewCart" class="text-decoration-none text-dark">
+                <div class="checkout-item card mb-3 p-3 shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <!-- Product Image -->
+                        <div class="checkout-item-image me-3">
+                            <img src="{{ item[5] }}" alt="{{ item[1] }}" class="img-fluid" style="width: 100px; border-radius: 10px;">
+                        </div>
+                        
+                        <!-- Product Details -->
+                        <div class="checkout-item-details flex-grow-1">
+                            <h6 class="mb-1">{{ item[1] }}</h6>
+                            <p class="mb-0 text-muted">Qty: {{item[6]}}</p>
+                        </div>
+                        
+                        <!-- Product Price -->
+                        <div class="checkout-item-price">
+                            <strong class="text-primary">${{item[2] * item[6]}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Payment Information Form -->
+        <form action="/process_payment" method="POST">
+            <!-- Payment Information -->
+            <h5 class="mt-4"><i class="fas fa-user icon"></i>Payment Information</h5>
+
+            <!-- Payment Method Dropdown -->
+            <div class="mb-3 payment-dropdown">
+                <label for="paymentMethod" class="form-label">Payment Method</label>
+                <select class="form-select" id="paymentMethod" name="paymentMethod" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="credit_card"><i class="fab fa-cc-visa"></i> Visa</option>
+                    <option value="credit_card"><i class="fab fa-cc-mastercard"></i> MasterCard</option>
+                    <option value="paypal"><i class="fab fa-cc-paypal"></i> PayPal</option>
+                    <option value="amex"><i class="fab fa-cc-amex"></i> American Express</option>
+                </select>
+                <i class="fab fa-cc-visa payment-icon"></i> <!-- Icon for visual representation -->
+            </div>
+
+            <div class="mb-3">
+                <label for="cardName" class="form-label">Card Name</label>
+                <input type="text" class="form-control" id="cardName" name="cardName" placeholder="Name on Card" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1111-2222-3333-4444" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="expDate" class="form-label">Expiration Date</label>
+                    <input type="text" class="form-control" id="expDate" name="expDate" placeholder="MM/YY" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" required>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <h5 class="mt-4"><i class="fas fa-receipt icon"></i>Order Summary</h5>
+            <div class="checkout-summary mb-4">
+                <p>Subtotal: ${{session['total_price']}}</p>
+                <p>Shipping: $10.00</p>
+                <p>Total: <strong>${{session['total_price'] + 10}}</strong></p>
+            </div>
+
+            <input type="hidden" id="payment_status" value="{{status}}">
+            <input type="hidden" name="pid" value="{{pid}}">
+            <input type="hidden" name='buy_type' id="buy_type" value="{{buy_type}}">
+            <button type="submit" class="btn btn-primary w-100"><i class="fas fa-check-circle icon"></i>Confirm Payment</button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <style>
+        .login-container{
+            min-height: 100vh;
+        }
+        .login-container form{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 10px;
+            padding: 15%;
+        }
+        .login-container form button{
+            background-color: slateblue;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .login-container form {
+                padding: 15%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-container form {
+                padding: 15%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container container d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-6 col-lg-4"> <!-- Adjusts width depending on screen size -->
+            <form method="post">
+                <div class="heading-login d-flex flex-column justify-content-center align-items-center">
+                    <h1 class="h3 mb-3 fw-normal">Sign In</h1>
+                    <h5 class="mb-3 fw-normal">Login to your account</h5>
+                </div>
+                
+                <div class="form-floating mt-2">
+                    <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{email}}">
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mt-3">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" value="{{password}}">
+                    <label for="floatingPassword">Password</label>
+                </div>
+
+                <div class="form-check text-start my-3">
+                    <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault" name="remember-me">
+                    <label class="form-check-label" for="flexCheckDefault"> Remember me </label>
+                </div>
+
+                <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+
+                <div class="mt-1">
+                    <p class="mt-1 mb-3 text-body-secondary text-center">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+                </div>
+
+                <input type="hidden" status="{{status}}" id="status">
+            </form>
+        </div>
+    </div>
+
+    <script>
+      const status = document.querySelector("#status").getAttribute("status");
+      if(status == "Failed"){
+          alert("Invalid email-id or password");
+      }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+{% extends 'homePage.html' %}
+
+{% block content %}
+<div class="container" style="margin: 13rem 10rem 13rem 10rem;">
+    {% if orders %}
+    <!-- Iterate over multiple orders -->
+    {% for order in orders %}
+    <div class="row justify-content-center align-items-center mb-4">
+        <!-- Order Detail Row -->
+        <div class="col-md-10">
+            <div class="row shadow-sm p-3 mb-5 bg-white rounded">
+                <!-- Product Image -->
+                <div class="col-md-4 text-center">
+                    <img src="{{ order[3] }}" alt="{{ order.product_name }}" class="img-fluid rounded" style="max-height: 200px;">
+                </div>
+
+                <!-- Order Summary -->
+                <div class="col-md-8">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <!-- Title with Icon -->
+                            <h2><i class="fas fa-receipt"></i> Order Details</h2>
+
+                            <!-- Product Details with Icons -->
+                            <h4 class="text-danger"><i class="fas fa-box"></i> {{ order[1] }}</h4>
+                            <p><i class="fas fa-dollar-sign"></i> Product Price: ${{ order[2] }}</p>
+                            <p><i class="fas fa-dollar-sign"></i> Total Price: ${{ order[2] * order[6] }}</p>
+                            <p><i class="fas fa-list-ol"></i> Quantity: {{ order[6] }}</p>
+                            <p class="text-muted"><i class="fas fa-calendar-alt"></i> Ordered on: {{ order[4] }}</p>
+
+                            <!-- Animated Status Bar -->
+                            <h5><i class="fas fa-shipping-fast"></i> Order Status:</h5>
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated
+                                    {% if order[5] == 'pending' %} bg-warning {% elif order[5] == 'Shipped' %} bg-info {% elif order[5] == 'Delivered' %} bg-success {% endif %}" 
+                                    role="progressbar" 
+                                    style="width: 
+                                        {% if order[5] == 'pending' %} 10% 
+                                        {% elif order[5] == 'shipped' %} 50% 
+                                        {% elif order[5] == 'delivered' %} 100% 
+                                        {% endif %}; font-weight: bold;" 
+                                    aria-valuenow="
+                                        {% if order[5] == 'pending' %} 10 
+                                        {% elif order[5] == 'Shipped' %} 50 
+                                        {% elif order[5] == 'Delivered' %} 100 
+                                        {% endif %}" 
+                                    aria-valuemin="0" aria-valuemax="100">
+                                    {{ order[5]|title }}
+                                </div>
+                            </div>
+
+                            <!-- Status Legend with Animated Badges -->
+                            <div class="mt-3 d-flex justify-content-between">
+                                <span class="badge bg-warning p-2 fade-in-badge"><i class="fas fa-hourglass-start"></i> Pending</span>
+                                <span class="badge bg-info p-2 fade-in-badge delay-1"><i class="fas fa-truck"></i> On the Way</span>
+                                <span class="badge bg-success p-2 fade-in-badge delay-2"><i class="fas fa-check-circle"></i> Delivered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <!-- No Orders Section -->
+    <div class="text-center">
+        <h1 class="display-4 text-danger"><i class="fas fa-box-open"></i> No Orders Placed</h1>
+        <p class="lead text-muted">It seems like you haven't placed any orders yet.</p>
+        <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg mt-4"><i class="fas fa-home"></i> Go to Home Page</a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Styling for Animations -->
+<style>
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Applying animation to badges */
+    .fade-in-badge {
+        animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    /* Delaying some badges for better effect */
+    .delay-1 { animation-delay: 0.3s; }
+    .delay-2 { animation-delay: 0.6s; }
+
+    .progress-bar {
+        transition: width 1.5s ease;
+    }
+
+    .img-fluid {
+        transition: transform 0.3s ease;
+    }
+
+    .img-fluid:hover {
+        transform: scale(1.05);
+    }
+
+    /* Styling for no orders message */
+    .text-center h1 {
+        font-weight: bold;
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+    .text-center .lead {
+        animation: fadeIn 1.5s ease-in-out forwards;
+    }
+    .btn-lg {
+        animation: fadeIn 2s ease-in-out forwards;
+    }
+</style>
+
+{% endblock %}
